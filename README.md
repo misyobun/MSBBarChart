@@ -19,7 +19,7 @@ MSBBarChart is an easy to use bar chart library for iOS.
 MSBBarChart is available through CocoaPods. To install it, simply add the following line to your Podfile:
 
 ```
-pod 'MSBBarCharts'
+pod 'MSBBarChart'
 ```
 
 ### Carthage
