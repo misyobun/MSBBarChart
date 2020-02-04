@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "74F3A54223DEC3DD004A020D"
-               BuildableName = "MSBBarChart.framework"
-               BlueprintName = "MSBBarChart-iOS"
+               BuildableName = "MSBBarChart-iOS.framework"
+               BlueprintName = "MSBBarChart"
                ReferencedContainer = "container:MSBBarChart.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -51,8 +51,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "74F3A54223DEC3DD004A020D"
-            BuildableName = "MSBBarChart.framework"
-            BlueprintName = "MSBBarChart-iOS"
+            BuildableName = "MSBBarChart-iOS.framework"
+            BlueprintName = "MSBBarChart"
             ReferencedContainer = "container:MSBBarChart.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

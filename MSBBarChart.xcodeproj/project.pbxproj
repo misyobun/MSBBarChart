@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7470991623E830BB0003B660 /* MSBBarChart-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F3A54323DEC3DD004A020D /* MSBBarChart-iOS.framework */; };
+		7470991623E830BB0003B660 /* MSBBarChart.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F3A54323DEC3DD004A020D /* MSBBarChart.framework */; };
 		7470991A23E94CCC0003B660 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7470991923E94CCC0003B660 /* SceneDelegate.swift */; };
 		74F3A54823DEC3DD004A020D /* MSBBarChart.h in Headers */ = {isa = PBXBuildFile; fileRef = 74F3A54623DEC3DD004A020D /* MSBBarChart.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		74F3A54F23DEC427004A020D /* MSBBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F3A54E23DEC427004A020D /* MSBBarChartView.swift */; };
@@ -16,7 +16,7 @@
 		74F3A57623DECE96004A020D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74F3A57423DECE96004A020D /* Main.storyboard */; };
 		74F3A57823DECE97004A020D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74F3A57723DECE97004A020D /* Assets.xcassets */; };
 		74F3A57B23DECE97004A020D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74F3A57923DECE97004A020D /* LaunchScreen.storyboard */; };
-		74F3A58223DEDDCE004A020D /* MSBBarChart-iOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74F3A54323DEC3DD004A020D /* MSBBarChart-iOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		74F3A58223DEDDCE004A020D /* MSBBarChart.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74F3A54323DEC3DD004A020D /* MSBBarChart.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +36,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				74F3A58223DEDDCE004A020D /* MSBBarChart-iOS.framework in Embed Frameworks */,
+				74F3A58223DEDDCE004A020D /* MSBBarChart.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -45,7 +45,7 @@
 
 /* Begin PBXFileReference section */
 		7470991923E94CCC0003B660 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		74F3A54323DEC3DD004A020D /* MSBBarChart-iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = "MSBBarChart-iOS.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		74F3A54323DEC3DD004A020D /* MSBBarChart.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MSBBarChart.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74F3A54623DEC3DD004A020D /* MSBBarChart.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSBBarChart.h; sourceTree = "<group>"; };
 		74F3A54723DEC3DD004A020D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		74F3A54E23DEC427004A020D /* MSBBarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MSBBarChartView.swift; path = Sources/MSBBarChartView.swift; sourceTree = "<group>"; };
@@ -70,7 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7470991623E830BB0003B660 /* MSBBarChart-iOS.framework in Frameworks */,
+				7470991623E830BB0003B660 /* MSBBarChart.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +90,7 @@
 		74F3A54423DEC3DD004A020D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				74F3A54323DEC3DD004A020D /* MSBBarChart-iOS.framework */,
+				74F3A54323DEC3DD004A020D /* MSBBarChart.framework */,
 				74F3A56C23DECE96004A020D /* Sample.app */,
 			);
 			name = Products;
@@ -141,9 +141,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		74F3A54223DEC3DD004A020D /* MSBBarChart-iOS */ = {
+		74F3A54223DEC3DD004A020D /* MSBBarChart */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 74F3A54B23DEC3DD004A020D /* Build configuration list for PBXNativeTarget "MSBBarChart-iOS" */;
+			buildConfigurationList = 74F3A54B23DEC3DD004A020D /* Build configuration list for PBXNativeTarget "MSBBarChart" */;
 			buildPhases = (
 				74F3A53E23DEC3DD004A020D /* Headers */,
 				74F3A53F23DEC3DD004A020D /* Sources */,
@@ -154,9 +154,9 @@
 			);
 			dependencies = (
 			);
-			name = "MSBBarChart-iOS";
+			name = MSBBarChart;
 			productName = MSBBarChart;
-			productReference = 74F3A54323DEC3DD004A020D /* MSBBarChart-iOS.framework */;
+			productReference = 74F3A54323DEC3DD004A020D /* MSBBarChart.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		74F3A56B23DECE96004A020D /* Sample */ = {
@@ -210,7 +210,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				74F3A54223DEC3DD004A020D /* MSBBarChart-iOS */,
+				74F3A54223DEC3DD004A020D /* MSBBarChart */,
 				74F3A56B23DECE96004A020D /* Sample */,
 			);
 		};
@@ -260,7 +260,7 @@
 /* Begin PBXTargetDependency section */
 		74F3A58423DEDDCE004A020D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 74F3A54223DEC3DD004A020D /* MSBBarChart-iOS */;
+			target = 74F3A54223DEC3DD004A020D /* MSBBarChart */;
 			targetProxy = 74F3A58323DEDDCE004A020D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -423,7 +423,7 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = msb.MSBBarChart;
-				PRODUCT_NAME = "MSBBarChart-iOS";
+				PRODUCT_NAME = MSBBarChart;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -449,7 +449,7 @@
 					"@loader_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = msb.MSBBarChart;
-				PRODUCT_NAME = "MSBBarChart-iOS";
+				PRODUCT_NAME = MSBBarChart;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -504,7 +504,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		74F3A54B23DEC3DD004A020D /* Build configuration list for PBXNativeTarget "MSBBarChart-iOS" */ = {
+		74F3A54B23DEC3DD004A020D /* Build configuration list for PBXNativeTarget "MSBBarChart" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				74F3A54C23DEC3DD004A020D /* Debug */,
