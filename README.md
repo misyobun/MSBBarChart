@@ -5,8 +5,7 @@
 
 MSBBarChart is an easy to use bar chart library for iOS.
 
-
-![e5b4c37582a718534d2e83ea48cea18c](https://user-images.githubusercontent.com/509448/73722607-38024600-476a-11ea-8806-cc4a9245ffd8.gif)
+<img width=280 src="https://user-images.githubusercontent.com/509448/73722607-38024600-476a-11ea-8806-cc4a9245ffd8.gif">
 
 ## Usage
 
