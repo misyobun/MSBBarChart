@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/cocoapods/v/MSBBarChart.svg?style=flat)](http://cocoapods.org/pods/MSBBarChart)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/komaji/GradientAnimationView/blob/master/LICENSE)
-
+[![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
 MSBBarChart is an easy to use bar chart library for iOS.
 
 <img width=280 src="https://user-images.githubusercontent.com/509448/73722607-38024600-476a-11ea-8806-cc4a9245ffd8.gif">
