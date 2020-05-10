@@ -20,7 +20,7 @@ public enum MSBBarChartViewOption {
 
 open class MSBBarChartView: UIView {
     open var assignmentOfColor: [Range<CGFloat>: UIColor] = [0.0..<0.25: #colorLiteral(red: 0.1294117719, green: 0.2156862766, blue: 0.06666667014, alpha: 1), 0.25..<0.50: #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1), 0.50..<0.75: #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1), 0.75..<1.0: #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)] // デフォルト
-
+    
     var space: CGFloat = 12.0
 
     var topSpace: CGFloat = 40.0
@@ -36,6 +36,8 @@ open class MSBBarChartView: UIView {
     var xAxisUnitLabel: String = ""
 
     var dataEntries: [BarEntry]? = nil
+    
+    private let minimumBarWidth: CGFloat = 12.0
 
     private let startHorizontalLineX: CGFloat = 24.0
 
@@ -275,6 +277,9 @@ extension MSBBarChartView {
         guard let dataSource = self.dataEntries, let max = getMaxEntry(), let interval = Int(max.textValue) else { return }
         mainLayer.sublayers?.forEach({ $0.removeFromSuperlayer() })
         barWidth = (scrollView.frame.width - (CGFloat(dataSource.count + 1) * space) - yAxisLabelWidth) / CGFloat(dataSource.count)
+        if barWidth < minimumBarWidth {
+           barWidth = minimumBarWidth
+        }
         scrollView.contentSize = CGSize(width: (barWidth + space) * CGFloat(dataSource.count), height: self.frame.size.height)
         mainLayer.frame = CGRect(x: 0, y: 0, width: scrollView.contentSize.width, height: scrollView.contentSize.height)
         drawVericalAxisLabels()
