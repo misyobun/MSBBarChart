@@ -39,7 +39,7 @@ open class MSBBarChartView: UIView {
     var xAxisUnitLabel: String = ""
 
     var dataEntries: [BarEntry]? = nil
-        
+
     private let minimumBarWidth: CGFloat = 12.0
 
     private let startHorizontalLineX: CGFloat = 24.0
