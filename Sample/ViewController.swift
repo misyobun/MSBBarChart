@@ -20,6 +20,8 @@ class ViewController: UIViewController {
         self.barChart.setDataEntries(values: [12,24,36,48,60,72,84,96])
         self.barChart.setXAxisUnitTitles(["繊維","IT","鉄鋼","繊維","リテール","不動産","人材派遣","銀行"])
         self.barChart.start()
+        
+        self.barChart2.isHiddenLabelAboveBar = true
         self.barChart2.setOptions([.yAxisTitle("売上"), .xAxisUnitLabel("月")])
         self.barChart2.assignmentOfColor =  [0.0..<0.14: #colorLiteral(red: 0.3098039329, green: 0.01568627544, blue: 0.1294117719, alpha: 1), 0.14..<0.28: #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1), 0.28..<0.42: #colorLiteral(red: 0.5725490451, green: 0, blue: 0.2313725501, alpha: 1), 0.42..<0.56: #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), 0.56..<0.70: #colorLiteral(red: 0.8549019694, green: 0.250980407, blue: 0.4784313738, alpha: 1), 0.70..<1.0: #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)]
         self.barChart2.setDataEntries(values: [16,32,64,128,256,512,1024,2048])
