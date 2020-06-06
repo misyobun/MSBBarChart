@@ -19,7 +19,10 @@ public enum MSBBarChartViewOption {
 }
 
 open class MSBBarChartView: UIView {
+
     open var assignmentOfColor: [Range<CGFloat>: UIColor] = [0.0..<0.25: #colorLiteral(red: 0.1294117719, green: 0.2156862766, blue: 0.06666667014, alpha: 1), 0.25..<0.50: #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1), 0.50..<0.75: #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1), 0.75..<1.0: #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)] // デフォルト
+
+    open var isHiddenLabelAboveBar: Bool = false
     
     var space: CGFloat = 12.0
 
@@ -36,7 +39,7 @@ open class MSBBarChartView: UIView {
     var xAxisUnitLabel: String = ""
 
     var dataEntries: [BarEntry]? = nil
-    
+
     private let minimumBarWidth: CGFloat = 12.0
 
     private let startHorizontalLineX: CGFloat = 24.0
@@ -88,7 +91,12 @@ extension MSBBarChartView {
         if !entry.isZeroBar() {
             drawBar(xPos: xPos, yPos: yPos, color: getBarColor(entry))
         }
-        drawBarValue(xPos: xPos - space / 2, yPos: yPos - space, textValue: entry.textValue, color: entry.color)
+        
+        if !isHiddenLabelAboveBar {
+            print("drawLabelAboveBar")
+            drawBarValue(xPos: xPos - space / 2, yPos: yPos - space, textValue: entry.textValue, color: entry.color)
+        }
+        
         drawXLabel(xPos: xPos - space / 2, yPos: mainLayer.frame.height - bottomSpace + 10, title: entry.title, textColor: entry.textColor)
     }
 

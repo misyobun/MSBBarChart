@@ -14,6 +14,14 @@
 
 ![スクリーンショット 2020-02-04 16 38 16](https://user-images.githubusercontent.com/509448/73723618-caa3e480-476c-11ea-8eb2-4e0424d6820f.png)
 
+### Enable to manage the display of the label above bar
+if you remove label above bar
+
+```
+barChart.isHiddenLabelAboveBar = true
+```
+
+
 ## Installation
 
 ### CocoaPods
