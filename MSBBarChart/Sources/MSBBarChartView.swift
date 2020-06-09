@@ -93,7 +93,6 @@ extension MSBBarChartView {
         }
         
         if !isHiddenLabelAboveBar {
-            print("drawLabelAboveBar")
             drawBarValue(xPos: xPos - space / 2, yPos: yPos - space, textValue: entry.textValue, color: entry.color)
         }
         
@@ -154,12 +153,12 @@ extension MSBBarChartView {
             let yPos = translateHeightValueToYPosition(value: (lineInfo["value"])!)
             let path = UIBezierPath()
             path.move(to: CGPoint(x: xPos, y: yPos))
-            path.addLine(to: CGPoint(x: scrollView.frame.size.width - space, y: yPos))
+            path.addLine(to: CGPoint(x: scrollView.contentSize.width - space, y: yPos))
             let lineLayer = CAShapeLayer()
             lineLayer.path = path.cgPath
             lineLayer.lineWidth = 0.5
             lineLayer.strokeColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1).cgColor
-            self.layer.insertSublayer(lineLayer, at: 0)
+            mainLayer.insertSublayer(lineLayer, at: 0)
         }
     }
 
@@ -288,7 +287,7 @@ extension MSBBarChartView {
         if barWidth < minimumBarWidth {
            barWidth = minimumBarWidth
         }
-        scrollView.contentSize = CGSize(width: (barWidth + space) * CGFloat(dataSource.count), height: self.frame.size.height)
+        scrollView.contentSize = CGSize(width: (barWidth + space) * CGFloat(dataSource.count + 1), height: self.frame.size.height)
         mainLayer.frame = CGRect(x: 0, y: 0, width: scrollView.contentSize.width, height: scrollView.contentSize.height)
         drawVericalAxisLabels()
         drawHorizontalLines()
