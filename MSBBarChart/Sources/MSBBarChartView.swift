@@ -153,12 +153,12 @@ extension MSBBarChartView {
             let yPos = translateHeightValueToYPosition(value: (lineInfo["value"])!)
             let path = UIBezierPath()
             path.move(to: CGPoint(x: xPos, y: yPos))
-            path.addLine(to: CGPoint(x: scrollView.frame.size.width - space, y: yPos))
+            path.addLine(to: CGPoint(x: scrollView.contentSize.width - space, y: yPos))
             let lineLayer = CAShapeLayer()
             lineLayer.path = path.cgPath
             lineLayer.lineWidth = 0.5
             lineLayer.strokeColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1).cgColor
-            self.layer.insertSublayer(lineLayer, at: 0)
+            mainLayer.insertSublayer(lineLayer, at: 0)
         }
     }
 
