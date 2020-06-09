@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |spec|
   spec.name         = "MSBBarChart"
-  spec.version      = "1.0.3"
+  spec.version      = "1.0.4"
   spec.summary      = "MSBBarChart is an easy to use bar chart library for iOS"
   spec.homepage     = "https://github.com/misyobun/MSBBarChart"
   spec.screenshots  = "https://user-images.githubusercontent.com/509448/73722607-38024600-476a-11ea-8806-cc4a9245ffd8.gif"
