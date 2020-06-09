@@ -93,7 +93,6 @@ extension MSBBarChartView {
         }
         
         if !isHiddenLabelAboveBar {
-            print("drawLabelAboveBar")
             drawBarValue(xPos: xPos - space / 2, yPos: yPos - space, textValue: entry.textValue, color: entry.color)
         }
         
