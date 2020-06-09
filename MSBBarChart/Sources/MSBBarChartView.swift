@@ -39,6 +39,8 @@ open class MSBBarChartView: UIView {
     var xAxisUnitLabel: String = ""
 
     var dataEntries: [BarEntry]? = nil
+    
+    private let barStartXpos:CGFloat = 12.0
 
     private let minimumBarWidth: CGFloat = 12.0
 
@@ -53,13 +55,14 @@ open class MSBBarChartView: UIView {
     private let yAxisMaxInterval: Int = 10
     
     private let firstBarXpos: CGFloat = 28.0
+    
+    private let barValueBaseMargin: CGFloat = 12.0
 
     private var maxYvalue: Int = 0
 
     private var widthBetweenZeroAndFirst: CGFloat = 16.0
 
     private var barWidth: CGFloat = 12.0
-    
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -89,8 +92,7 @@ extension MSBBarChartView {
     }
 
     private func showEntry(index: Int, entry: BarEntry, maxInterval: CGFloat) {
-        var xPos: CGFloat = space + CGFloat(index) * (barWidth + space) + widthBetweenZeroAndFirst
-        
+        let xPos: CGFloat = barStartXpos + CGFloat(index) * (barWidth + space) + widthBetweenZeroAndFirst
         let yPos: CGFloat = translateHeightValueToYPosition(value: CGFloat(Int(entry.textValue)!) / CGFloat(maxYvalue))
 
         if !entry.isZeroBar() {
@@ -98,10 +100,10 @@ extension MSBBarChartView {
         }
         
         if !isHiddenLabelAboveBar {
-            drawBarValue(xPos: xPos - space / 2, yPos: yPos - space, textValue: entry.textValue, color: entry.color)
+            drawBarValue(xPos: xPos - barValueBaseMargin / 2, yPos: yPos - barValueBaseMargin, textValue: entry.textValue, color: entry.color)
         }
         
-        drawXLabel(xPos: xPos - space / 2, yPos: mainLayer.frame.height - bottomSpace + 10, title: entry.title, textColor: entry.textColor)
+        drawXLabel(xPos: xPos - barValueBaseMargin / 2 , yPos: mainLayer.frame.height - bottomSpace + 4.0, title: entry.title, textColor: entry.textColor)
     }
 
     private func drawBar(xPos: CGFloat, yPos: CGFloat, color: UIColor) {
@@ -219,7 +221,7 @@ extension MSBBarChartView {
 
     private func drawBarValue(xPos: CGFloat, yPos: CGFloat, textValue: String, color: UIColor) {
         let textLayer = CATextLayer()
-        textLayer.frame = CGRect(x: xPos, y: yPos, width: barWidth + space, height: 16)
+        textLayer.frame = CGRect(x: xPos, y: yPos, width: barWidth + barValueBaseMargin, height: 16)
         textLayer.foregroundColor = #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1)
         textLayer.backgroundColor = UIColor.clear.cgColor
         textLayer.alignmentMode = CATextLayerAlignmentMode.center
@@ -232,7 +234,7 @@ extension MSBBarChartView {
 
     private func drawXLabel(xPos: CGFloat, yPos: CGFloat, title: String, textColor: UIColor) {
         let textLayer = CATextLayer()
-        textLayer.frame = CGRect(x: xPos, y: yPos, width: barWidth + space, height: 16)
+        textLayer.frame = CGRect(x: xPos, y: yPos, width: barWidth + barValueBaseMargin, height: 16)
         textLayer.foregroundColor = textColor.cgColor
         textLayer.backgroundColor = UIColor.clear.cgColor
         textLayer.alignmentMode = CATextLayerAlignmentMode.center
@@ -295,9 +297,10 @@ extension MSBBarChartView {
         
         var contentWidth = (barWidth + space) * CGFloat(dataSource.count)
         let viewWidth = self.scrollView.frame.size.width - yAxisLabelWidth
-        if viewWidth > contentWidth {
-            contentWidth = viewWidth
+        if  contentWidth > viewWidth {
+            contentWidth = contentWidth + barStartXpos + widthBetweenZeroAndFirst - yAxisLabelWidth
         }
+        
         contentWidth = contentWidth + yAxisLabelWidth
         scrollView.contentSize = CGSize(width:contentWidth , height: self.frame.size.height)
         mainLayer.frame = CGRect(x: 0, y: 0, width: scrollView.contentSize.width, height: scrollView.contentSize.height)
