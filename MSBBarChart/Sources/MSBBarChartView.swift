@@ -51,13 +51,16 @@ open class MSBBarChartView: UIView {
     private let yAxisLabelWidth: CGFloat = 20.0
 
     private let yAxisMaxInterval: Int = 10
+    
+    private let firstBarXpos: CGFloat = 28.0
 
     private var maxYvalue: Int = 0
 
     private var widthBetweenZeroAndFirst: CGFloat = 16.0
 
     private var barWidth: CGFloat = 12.0
-
+    
+    
     public override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -86,8 +89,10 @@ extension MSBBarChartView {
     }
 
     private func showEntry(index: Int, entry: BarEntry, maxInterval: CGFloat) {
-        let xPos: CGFloat = space + CGFloat(index) * (barWidth + space) + widthBetweenZeroAndFirst
+        var xPos: CGFloat = space + CGFloat(index) * (barWidth + space) + widthBetweenZeroAndFirst
+        
         let yPos: CGFloat = translateHeightValueToYPosition(value: CGFloat(Int(entry.textValue)!) / CGFloat(maxYvalue))
+
         if !entry.isZeroBar() {
             drawBar(xPos: xPos, yPos: yPos, color: getBarColor(entry))
         }
@@ -153,7 +158,7 @@ extension MSBBarChartView {
             let yPos = translateHeightValueToYPosition(value: (lineInfo["value"])!)
             let path = UIBezierPath()
             path.move(to: CGPoint(x: xPos, y: yPos))
-            path.addLine(to: CGPoint(x: scrollView.contentSize.width - space, y: yPos))
+            path.addLine(to: CGPoint(x: scrollView.contentSize.width, y: yPos))
             let lineLayer = CAShapeLayer()
             lineLayer.path = path.cgPath
             lineLayer.lineWidth = 0.5
@@ -283,11 +288,18 @@ extension MSBBarChartView {
     open func start() {
         guard let dataSource = self.dataEntries, let max = getMaxEntry(), let interval = Int(max.textValue) else { return }
         mainLayer.sublayers?.forEach({ $0.removeFromSuperlayer() })
-        barWidth = (scrollView.frame.width - (CGFloat(dataSource.count + 1) * space) - yAxisLabelWidth) / CGFloat(dataSource.count)
+        barWidth = (scrollView.frame.width - (CGFloat(dataSource.count) * space) - yAxisLabelWidth) / CGFloat(dataSource.count)
         if barWidth < minimumBarWidth {
            barWidth = minimumBarWidth
         }
-        scrollView.contentSize = CGSize(width: (barWidth + space) * CGFloat(dataSource.count + 1), height: self.frame.size.height)
+        
+        var contentWidth = (barWidth + space) * CGFloat(dataSource.count)
+        let viewWidth = self.scrollView.frame.size.width - yAxisLabelWidth
+        if viewWidth > contentWidth {
+            contentWidth = viewWidth
+        }
+        contentWidth = contentWidth + yAxisLabelWidth
+        scrollView.contentSize = CGSize(width:contentWidth , height: self.frame.size.height)
         mainLayer.frame = CGRect(x: 0, y: 0, width: scrollView.contentSize.width, height: scrollView.contentSize.height)
         drawVericalAxisLabels()
         drawHorizontalLines()
