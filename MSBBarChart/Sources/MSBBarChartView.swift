@@ -50,7 +50,7 @@ open class MSBBarChartView: UIView {
 
     private let scrollView: UIScrollView = UIScrollView()
 
-    private let yAxisLabelWidth: CGFloat = 20.0
+    private var yAxisLabelWidth: CGFloat = 20.0
 
     private let yAxisMaxInterval: Int = 10
     
@@ -63,6 +63,10 @@ open class MSBBarChartView: UIView {
     private var widthBetweenZeroAndFirst: CGFloat = 16.0
 
     private var barWidth: CGFloat = 12.0
+    
+    private var yAxisLabelFontSize:CGFloat = 8.0
+    
+    private var barLabelValueFontSize:CGFloat = 9.0
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -175,7 +179,7 @@ extension MSBBarChartView {
         labelLayer.frame = CGRect(x: xPos, y: yPos, width: yAxisLabelWidth, height: 16)
         labelLayer.string = "0"
         labelLayer.alignmentMode = CATextLayerAlignmentMode(rawValue: "right")
-        labelLayer.fontSize = 8
+        labelLayer.fontSize = yAxisLabelFontSize
         labelLayer.string = label
         labelLayer.contentsScale = UIScreen.main.scale
         labelLayer.foregroundColor = #colorLiteral(red: 0.631372549, green: 0.631372549, blue: 0.631372549, alpha: 1)
@@ -228,7 +232,7 @@ extension MSBBarChartView {
         textLayer.alignmentMode = CATextLayerAlignmentMode.center
         textLayer.contentsScale = UIScreen.main.scale
         textLayer.font = CTFontCreateWithName(UIFont.systemFont(ofSize: 0).fontName as CFString, 0, nil)
-        textLayer.fontSize = 9
+        textLayer.fontSize = barLabelValueFontSize
         textLayer.string = textValue
         mainLayer.addSublayer(textLayer)
     }
@@ -241,7 +245,7 @@ extension MSBBarChartView {
         textLayer.alignmentMode = CATextLayerAlignmentMode.center
         textLayer.contentsScale = UIScreen.main.scale
         textLayer.font = CTFontCreateWithName(UIFont.systemFont(ofSize: 0).fontName as CFString, 0, nil)
-        textLayer.fontSize = 9
+        textLayer.fontSize = barLabelValueFontSize
         textLayer.string = title
         mainLayer.addSublayer(textLayer)
     }
@@ -262,6 +266,11 @@ extension MSBBarChartView {
             }
         }
         return barColor!
+    }
+    
+    private func calcYaxisLabelMaxWidth(_ maxValue:String) {
+        let size: CGSize = maxValue.size(withAttributes: [.font: UIFont.systemFont(ofSize: yAxisLabelFontSize)])
+        self.yAxisLabelWidth = size.width
     }
 }
 
@@ -329,6 +338,7 @@ extension MSBBarChartView {
             entries.append(BarEntry(color: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), height: CGFloat(height), title: "\(i + 1)\(xAxisUnitLabel)", textValue: "\(value)", isMax: isMax, textColor: xAxisLabelColor))
         }
         self.dataEntries = entries
+        self.calcYaxisLabelMaxWidth(String(maxValue))
     }
 
     open func setXAxisUnitTitles(_ titles: [String]) {
