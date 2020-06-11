@@ -210,7 +210,8 @@ extension MSBBarChartView {
     }
 
     private func createYAxisLabels(maxEntry: BarEntry) -> [String] {
-        let max = ((Int(maxEntry.textValue)! / yAxisMaxInterval) + 1) * 10
+        guard let maxEntryValue = Int(maxEntry.textValue) else { return [] }
+        let max = calcMax(maxEntryValue)
         maxYvalue = max
         let intervalValue = Int(max) / Int(yAxisNumberOfInterval)
         var insertValue: Int = 0
@@ -269,10 +270,14 @@ extension MSBBarChartView {
     }
     
     private func calcYaxisLabelMaxWidth(_ maxValue:Int) {
-        let max = ((maxValue / yAxisMaxInterval) + 1) * 10
+        let max = calcMax(maxValue)
         let maxStr = String(max)
         let size: CGSize = maxStr.size(withAttributes: [.font: UIFont.systemFont(ofSize: yAxisLabelFontSize)])
         self.yAxisLabelWidth = size.width
+    }
+    
+    private func calcMax(_ maxValue:Int) -> Int {
+        return ((maxValue / yAxisMaxInterval) + 1) * 10
     }
 }
 
