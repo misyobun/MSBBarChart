@@ -50,7 +50,7 @@ open class MSBBarChartView: UIView {
 
     private let scrollView: UIScrollView = UIScrollView()
 
-    private var yAxisLabelWidth: CGFloat = 20.0
+    private var yAxisLabelWidth: CGFloat = 0.0
 
     private let yAxisMaxInterval: Int = 10
     
@@ -272,8 +272,10 @@ extension MSBBarChartView {
     private func calcYaxisLabelMaxWidth(_ maxValue:Int) {
         let max = calcMax(maxValue)
         let maxStr = String(max)
-        let size: CGSize = maxStr.size(withAttributes: [.font: UIFont.systemFont(ofSize: yAxisLabelFontSize)])
-        self.yAxisLabelWidth = size.width
+        let size = maxStr.size(withAttributes: [.font: UIFont.systemFont(ofSize: yAxisLabelFontSize)])
+        if self.yAxisLabelWidth < size.width {
+            self.yAxisLabelWidth = size.width
+        }
     }
     
     private func calcMax(_ maxValue:Int) -> Int {
@@ -298,6 +300,8 @@ extension MSBBarChartView {
                 yAxisNumberOfInterval = value
             case let .yAxisTitle(value):
                 yAxisTitle = value
+                let size = yAxisTitle.size(withAttributes: [.font: UIFont.systemFont(ofSize: yAxisLabelFontSize)])
+                self.yAxisLabelWidth = size.width
             case let .xAxisUnitLabel(value):
                 xAxisUnitLabel = value
             }
