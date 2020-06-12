@@ -46,8 +46,6 @@ open class MSBBarChartView: UIView {
 
     private let minimumBarWidth: CGFloat = 12.0
 
-    private let startHorizontalLineMargin: CGFloat = 4.0
-
     private let mainLayer: CALayer = CALayer()
 
     private let scrollView: UIScrollView = UIScrollView()
@@ -59,6 +57,8 @@ open class MSBBarChartView: UIView {
     private let firstBarXpos: CGFloat = 28.0
     
     private let barValueBaseMargin: CGFloat = 12.0
+    
+    private var startHorizontalLineMargin: CGFloat = 4.0
 
     private var maxYvalue: Int = 0
 
@@ -288,6 +288,12 @@ extension MSBBarChartView {
     private func calcMax(_ maxValue:Int) -> Int {
         return ((maxValue / yAxisMaxInterval) + 1) * 10
     }
+    
+    private func prepareParameters() {
+        self.yAxisLabelWidth = isHideenExceptBars ? 0 : self.yAxisLabelWidth
+        self.startHorizontalLineMargin = isHideenExceptBars ? 0 : self.startHorizontalLineMargin
+        self.bottomSpace = isHiddenLabelAboveBar ? 0 : self.bottomSpace
+    }
 }
 
 extension MSBBarChartView {
@@ -318,6 +324,9 @@ extension MSBBarChartView {
     open func start() {
         guard let dataSource = self.dataEntries, let max = getMaxEntry(), let interval = Int(max.textValue) else { return }
         mainLayer.sublayers?.forEach({ $0.removeFromSuperlayer() })
+        
+        prepareParameters()
+        
         barWidth = (scrollView.frame.width - (CGFloat(dataSource.count - 1) * space) - yAxisLabelWidth + startHorizontalLineMargin - bothSideMargin * 2) / CGFloat(dataSource.count)
         if barWidth < minimumBarWidth {
            barWidth = minimumBarWidth
@@ -328,6 +337,7 @@ extension MSBBarChartView {
         mainLayer.frame = CGRect(x: 0, y: 0, width: scrollView.contentSize.width, height: scrollView.contentSize.height)
         
         calcMaxYvalue()
+        
         if (!isHideenExceptBars) {
             drawVericalAxisLabels()
             drawHorizontalLines()
