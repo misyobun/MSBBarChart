@@ -17,7 +17,7 @@ public enum MSBBarChartViewOption {
     case yAxisTitle(String)
     case xAxisUnitLabel(String)
     case isHiddenLabelAboveBar(Bool)
-    case isHideenExceptBars(Bool)
+    case isHiddenExceptBars(Bool)
 }
 
 open class MSBBarChartView: UIView {
@@ -70,7 +70,7 @@ open class MSBBarChartView: UIView {
     
     private var isHiddenLabelAboveBar: Bool = false
     
-    private var isHideenExceptBars: Bool = false
+    private var isHiddenExceptBars: Bool = false
 
         
     public override init(frame: CGRect) {
@@ -112,7 +112,7 @@ extension MSBBarChartView {
             drawBarValue(xPos: xPos - barValueBaseMargin / 2, yPos: yPos - barValueBaseMargin, textValue: entry.textValue, color: entry.color)
         }
         
-        if !isHideenExceptBars {
+        if !isHiddenExceptBars {
             drawXLabel(xPos: xPos - barValueBaseMargin / 2 , yPos: mainLayer.frame.height - bottomSpace + 4.0, title: entry.title, textColor: entry.textColor)
         }
     }
@@ -293,9 +293,9 @@ extension MSBBarChartView {
     }
     
     private func prepareParameters() {
-        self.yAxisLabelWidth = isHideenExceptBars ? 0 : self.yAxisLabelWidth
-        self.startHorizontalLineMargin = isHideenExceptBars ? 0 : self.startHorizontalLineMargin
-        self.bottomSpace = isHideenExceptBars ? 0 : self.bottomSpace
+        self.yAxisLabelWidth = isHiddenExceptBars ? 0 : self.yAxisLabelWidth
+        self.startHorizontalLineMargin = isHiddenExceptBars ? 0 : self.startHorizontalLineMargin
+        self.bottomSpace = isHiddenExceptBars ? 0 : self.bottomSpace
     }
 }
 
@@ -322,8 +322,8 @@ extension MSBBarChartView {
                 xAxisUnitLabel = value
             case let .isHiddenLabelAboveBar(value):
                 isHiddenLabelAboveBar = value
-            case let .isHideenExceptBars(value):
-                isHideenExceptBars = value
+            case let .isHiddenExceptBars(value):
+                isHiddenExceptBars = value
             }
         }
     }
@@ -345,7 +345,7 @@ extension MSBBarChartView {
         
         calcMaxYvalue()
         
-        if (!isHideenExceptBars) {
+        if (!isHiddenExceptBars) {
             drawVericalAxisLabels()
             drawHorizontalLines()
         }
