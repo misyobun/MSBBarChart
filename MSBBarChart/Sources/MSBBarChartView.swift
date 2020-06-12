@@ -292,7 +292,7 @@ extension MSBBarChartView {
     private func prepareParameters() {
         self.yAxisLabelWidth = isHideenExceptBars ? 0 : self.yAxisLabelWidth
         self.startHorizontalLineMargin = isHideenExceptBars ? 0 : self.startHorizontalLineMargin
-        self.bottomSpace = isHiddenLabelAboveBar ? 0 : self.bottomSpace
+        self.bottomSpace = isHideenExceptBars ? 0 : self.bottomSpace
     }
 }
 
