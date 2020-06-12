@@ -16,16 +16,14 @@ public enum MSBBarChartViewOption {
     case yAxisNumberOfInterval(Int)
     case yAxisTitle(String)
     case xAxisUnitLabel(String)
+    case isHiddenLabelAboveBar(Bool)
+    case isHideenExceptBars(Bool)
 }
 
 open class MSBBarChartView: UIView {
 
     open var assignmentOfColor: [Range<CGFloat>: UIColor] = [0.0..<0.25: #colorLiteral(red: 0.1294117719, green: 0.2156862766, blue: 0.06666667014, alpha: 1), 0.25..<0.50: #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1), 0.50..<0.75: #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1), 0.75..<1.0: #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)] // デフォルト
 
-    open var isHiddenLabelAboveBar: Bool = false
-    
-    open var isHideenExceptBars: Bool = false
-    
     var space: CGFloat = 12.0
 
     var topSpace: CGFloat = 40.0
@@ -70,6 +68,11 @@ open class MSBBarChartView: UIView {
     
     private var barLabelValueFontSize:CGFloat = 9.0
     
+    private var isHiddenLabelAboveBar: Bool = false
+    
+    private var isHideenExceptBars: Bool = false
+
+        
     public override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -317,6 +320,10 @@ extension MSBBarChartView {
                 self.yAxisLabelWidth = size.width
             case let .xAxisUnitLabel(value):
                 xAxisUnitLabel = value
+            case let .isHiddenLabelAboveBar(value):
+                isHiddenLabelAboveBar = value
+            case let .isHideenExceptBars(value):
+                isHideenExceptBars = value
             }
         }
     }
