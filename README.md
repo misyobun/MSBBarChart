@@ -24,7 +24,6 @@ barChart.setOptions([.isHiddenLabelAboveBar(true)])
 
 ```
 barChart.setOptions([.isHiddenExceptBars(true)])
-
 ```
 
  
