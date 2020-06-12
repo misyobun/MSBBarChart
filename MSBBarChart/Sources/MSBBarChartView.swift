@@ -18,11 +18,14 @@ public enum MSBBarChartViewOption {
     case xAxisUnitLabel(String)
     case isHiddenLabelAboveBar(Bool)
     case isHiddenExceptBars(Bool)
+    case isGradientBar(Bool)
 }
 
 open class MSBBarChartView: UIView {
 
     open var assignmentOfColor: [Range<CGFloat>: UIColor] = [0.0..<0.25: #colorLiteral(red: 0.1294117719, green: 0.2156862766, blue: 0.06666667014, alpha: 1), 0.25..<0.50: #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1), 0.50..<0.75: #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1), 0.75..<1.0: #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)] // デフォルト
+
+    open var assignmentOfGradient: [Range<CGFloat>: [UIColor]] = [0.0..<0.25: [#colorLiteral(red: 0.1294117719, green: 0.2156862766, blue: 0.06666667014, alpha: 1),#colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)], 0.25..<0.50: [#colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1),#colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)], 0.50..<0.75:[#colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1),#colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)], 0.75..<1.0: [#colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1),#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)]]
 
     var space: CGFloat = 12.0
 
@@ -44,7 +47,7 @@ open class MSBBarChartView: UIView {
 
     private let minimumBarWidth: CGFloat = 12.0
 
-    private let mainLayer: CALayer = CALayer()
+    private let mainLayer: CAGradientLayer = CAGradientLayer()
 
     private let scrollView: UIScrollView = UIScrollView()
 
@@ -105,7 +108,12 @@ extension MSBBarChartView {
         let xPos: CGFloat = yAxisLabelWidth + bothSideMargin + CGFloat(index) * barWidthSet
         let yPos: CGFloat = translateHeightValueToYPosition(value: CGFloat(Int(entry.textValue)!) / CGFloat(maxYvalue))
         if !entry.isZeroBar() {
-            drawBar(xPos: xPos, yPos: yPos, color: getBarColor(entry))
+
+             if isGradientBar {
+                drawGradientBar(xPos: xPos, yPos: yPos, colors: getBarColors(entry))
+            } else {
+                drawBar(xPos: xPos, yPos: yPos, color: getBarColor(entry))
+            }
         }
         
         if !isHiddenLabelAboveBar {
@@ -132,6 +140,44 @@ extension MSBBarChartView {
             let barLayerBase = CALayer()
             barLayerBase.frame = CGRect(x: xPos, y: self.mainLayer.frame.height - self.bottomSpace, width: self.barWidth, height: 0)
             barLayerBase.backgroundColor = color.cgColor
+            barLayerBase.anchorPoint = CGPoint(x: 0.5, y: 1.0)
+            mainLayer.addSublayer(barLayerBase)
+            let animation = CABasicAnimation(keyPath: "bounds")
+            animation.duration = 0.5
+            animation.fromValue = CGRect(x: xPos, y: self.mainLayer.frame.height - self.bottomSpace, width: self.barWidth, height: 0)
+            animation.toValue = CGRect(x: xPos, y: self.mainLayer.frame.height - self.bottomSpace, width: self.barWidth, height: -1 * (self.mainLayer.frame.height - self.bottomSpace - yPos) / 2)
+            animation.isRemovedOnCompletion = false
+            animation.fillMode = CAMediaTimingFillMode(rawValue: "forwards")
+            barLayerBase.add(animation, forKey: "bounds")
+            barLayerBase.frame = animation.toValue as! CGRect
+        }
+        let subAnimation = CABasicAnimation(keyPath: "bounds")
+        subAnimation.duration = 0.5
+        subAnimation.fromValue = CGRect(x: xPos, y: self.mainLayer.frame.height - self.bottomSpace, width: self.barWidth, height: 0)
+        subAnimation.toValue = CGRect(x: xPos, y: self.mainLayer.frame.height - self.bottomSpace, width: self.barWidth, height: -1 * (self.mainLayer.frame.height - self.bottomSpace - yPos))
+        subAnimation.isRemovedOnCompletion = false
+        subAnimation.fillMode = CAMediaTimingFillMode(rawValue: "forwards")
+        layer.add(subAnimation, forKey: "bounds")
+        layer.frame = subAnimation.toValue as! CGRect
+    }
+
+    private func drawGradientBar(xPos: CGFloat, yPos: CGFloat, colors: [UIColor]) {
+        let barLayer = CAGradientLayer()
+        barLayer.cornerRadius = 4.0
+        barLayer.frame = CGRect(x: xPos, y: self.mainLayer.frame.height - self.bottomSpace, width: self.barWidth, height: 0)
+        barLayer.anchorPoint = CGPoint(x: 0.5, y: 1.0)
+        let cgColors: [CGColor] = colors.map({ $0.cgColor })
+        barLayer.colors = cgColors
+
+        mainLayer.addSublayer(barLayer)
+        executeGradientAnimation(xPos, yPos, colors, barLayer)
+    }
+    
+    private func executeGradientAnimation(_ xPos: CGFloat, _ yPos: CGFloat, _ colors: [UIColor], _ layer: CAGradientLayer) {
+        if yPos != mainLayer.frame.size.height - bottomSpace {
+            let barLayerBase = CAGradientLayer()
+            barLayerBase.frame = CGRect(x: xPos, y: self.mainLayer.frame.height - self.bottomSpace, width: self.barWidth, height: 0)
+            barLayerBase.colors = colors
             barLayerBase.anchorPoint = CGPoint(x: 0.5, y: 1.0)
             mainLayer.addSublayer(barLayerBase)
             let animation = CABasicAnimation(keyPath: "bounds")
@@ -278,6 +324,19 @@ extension MSBBarChartView {
         }
         return barColor!
     }
+
+    private func getBarColors(_ barEntity: BarEntry) -> [UIColor] {
+        guard let maxBar = getMaxEntry() else { return [UIColor.blue] }
+        let ratio = barEntity.height / maxBar.height
+        let fetchLastAssignmentOfGradient = assignmentOfGradient.reversed()
+        var barColors = fetchLastAssignmentOfGradient.first?.value
+        assignmentOfGradient.keys.forEach { range in
+            if (range.contains(ratio)) {
+                barColors = assignmentOfGradient[range] ?? barColors
+            }
+        }
+        return barColors!
+    }
     
     private func calcYaxisLabelMaxWidth(_ maxValue:Int) {
         let max = calcMax(maxValue)
@@ -324,6 +383,8 @@ extension MSBBarChartView {
                 isHiddenLabelAboveBar = value
             case let .isHiddenExceptBars(value):
                 isHiddenExceptBars = value
+            case let .isGradientBar(value):
+                isGradientBar = value
             }
         }
     }
