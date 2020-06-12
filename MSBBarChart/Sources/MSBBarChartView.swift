@@ -24,6 +24,8 @@ open class MSBBarChartView: UIView {
 
     open var isHiddenLabelAboveBar: Bool = false
     
+    open var isHideenExceptBars: Bool = false
+    
     var space: CGFloat = 12.0
 
     var topSpace: CGFloat = 40.0
@@ -99,7 +101,6 @@ extension MSBBarChartView {
         let barWidthSet = barWidth + space
         let xPos: CGFloat = yAxisLabelWidth + bothSideMargin + CGFloat(index) * barWidthSet
         let yPos: CGFloat = translateHeightValueToYPosition(value: CGFloat(Int(entry.textValue)!) / CGFloat(maxYvalue))
- 
         if !entry.isZeroBar() {
             drawBar(xPos: xPos, yPos: yPos, color: getBarColor(entry))
         }
@@ -108,7 +109,9 @@ extension MSBBarChartView {
             drawBarValue(xPos: xPos - barValueBaseMargin / 2, yPos: yPos - barValueBaseMargin, textValue: entry.textValue, color: entry.color)
         }
         
-        drawXLabel(xPos: xPos - barValueBaseMargin / 2 , yPos: mainLayer.frame.height - bottomSpace + 4.0, title: entry.title, textColor: entry.textColor)
+        if !isHideenExceptBars {
+            drawXLabel(xPos: xPos - barValueBaseMargin / 2 , yPos: mainLayer.frame.height - bottomSpace + 4.0, title: entry.title, textColor: entry.textColor)
+        }
     }
 
     private func drawBar(xPos: CGFloat, yPos: CGFloat, color: UIColor) {
@@ -198,6 +201,12 @@ extension MSBBarChartView {
         }
         drawVerticalAxisLabel(yAxisTitle, 0, 20)
     }
+    
+    private func calcMaxYvalue() {
+        guard let maxEntry = getMaxEntry(), let maxEntryValue = Int(maxEntry.textValue) else { return }
+        let max = calcMax(maxEntryValue)
+        maxYvalue = max
+    }
 
     private func getMaxEntry() -> BarEntry? {
         guard let entries = self.dataEntries else { return nil }
@@ -210,9 +219,7 @@ extension MSBBarChartView {
     }
 
     private func createYAxisLabels(maxEntry: BarEntry) -> [String] {
-        guard let maxEntryValue = Int(maxEntry.textValue) else { return [] }
-        let max = calcMax(maxEntryValue)
-        maxYvalue = max
+        let max = maxYvalue
         let intervalValue = Int(max) / Int(yAxisNumberOfInterval)
         var insertValue: Int = 0
         var xAxisLabels: [String] = []
@@ -319,8 +326,13 @@ extension MSBBarChartView {
         let contentWidth = yAxisLabelWidth - startHorizontalLineMargin  + bothSideMargin + (barWidth + space) * CGFloat(dataSource.count - 1) + barWidth  + bothSideMargin
         scrollView.contentSize = CGSize(width:contentWidth , height: self.frame.size.height)
         mainLayer.frame = CGRect(x: 0, y: 0, width: scrollView.contentSize.width, height: scrollView.contentSize.height)
-        drawVericalAxisLabels()
-        drawHorizontalLines()
+        
+        calcMaxYvalue()
+        if (!isHideenExceptBars) {
+            drawVericalAxisLabels()
+            drawHorizontalLines()
+        }
+
         for i in 0..<dataSource.count {
             showEntry(index: i, entry: dataSource[i], maxInterval: CGFloat(interval))
         }
