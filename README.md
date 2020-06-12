@@ -18,7 +18,7 @@
 if you remove label above bar
 
 ```
-barChart.isHiddenLabelAboveBar = true
+barChart.setOptions([.isHiddenLabelAboveBar(true)])
 ```
 
 
