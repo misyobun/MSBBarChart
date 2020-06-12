@@ -23,7 +23,7 @@ barChart.setOptions([.isHiddenLabelAboveBar(true)])
 ### if you want to hide labels and lines
 
 ```
-.barChart.setOptions([.isHiddenExceptBars(true)])
+barChart.setOptions([.isHiddenExceptBars(true)])
 
 ```
 
