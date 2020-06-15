@@ -25,7 +25,7 @@ open class MSBBarChartView: UIView {
 
     open var assignmentOfColor: [Range<CGFloat>: UIColor] = [0.0..<0.25: #colorLiteral(red: 0.1294117719, green: 0.2156862766, blue: 0.06666667014, alpha: 1), 0.25..<0.50: #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1), 0.50..<0.75: #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1), 0.75..<1.0: #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)] // デフォルト
 
-    open var assignmentOfGradient: [Range<CGFloat>: [UIColor]] = [0.0..<0.25: [#colorLiteral(red: 0.1294117719, green: 0.2156862766, blue: 0.06666667014, alpha: 1),#colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)], 0.25..<0.50: [#colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1),#colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)], 0.50..<0.75:[#colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1),#colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)], 0.75..<1.0: [#colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1),#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)]]
+    open var assignmentOfGradient: [Range<CGFloat>: [UIColor]] = [0.0..<0.25: [#colorLiteral(red: 0.1294117719, green: 0.2156862766, blue: 0.06666667014, alpha: 1), #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)], 0.25..<0.50: [#colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1), #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)], 0.50..<0.75: [#colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1), #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)], 0.75..<1.0: [#colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1), #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)]]
 
     var space: CGFloat = 12.0
 
@@ -41,9 +41,9 @@ open class MSBBarChartView: UIView {
 
     var xAxisUnitLabel: String = ""
 
-    var dataEntries: [BarEntry]? = nil
+    var dataEntries: [BarEntry]?
     
-    private let bothSideMargin:CGFloat = 8.0
+    private let bothSideMargin: CGFloat = 8.0
 
     private let minimumBarWidth: CGFloat = 12.0
 
@@ -67,15 +67,16 @@ open class MSBBarChartView: UIView {
 
     private var barWidth: CGFloat = 12.0
     
-    private var yAxisLabelFontSize:CGFloat = 8.0
+    private var yAxisLabelFontSize: CGFloat = 8.0
     
-    private var barLabelValueFontSize:CGFloat = 9.0
+    private var barLabelValueFontSize: CGFloat = 9.0
     
     private var isHiddenLabelAboveBar: Bool = false
     
     private var isHiddenExceptBars: Bool = false
 
-        
+    private var isGradientBar: Bool = false
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -121,7 +122,7 @@ extension MSBBarChartView {
         }
         
         if !isHiddenExceptBars {
-            drawXLabel(xPos: xPos - barValueBaseMargin / 2 , yPos: mainLayer.frame.height - bottomSpace + 4.0, title: entry.title, textColor: entry.textColor)
+            drawXLabel(xPos: xPos - barValueBaseMargin / 2, yPos: mainLayer.frame.height - bottomSpace + 4.0, title: entry.title, textColor: entry.textColor)
         }
     }
 
@@ -149,7 +150,7 @@ extension MSBBarChartView {
             animation.isRemovedOnCompletion = false
             animation.fillMode = CAMediaTimingFillMode(rawValue: "forwards")
             barLayerBase.add(animation, forKey: "bounds")
-            barLayerBase.frame = animation.toValue as! CGRect
+            barLayerBase.frame = animation.toValue as? CGRect ?? CGRect()
         }
         let subAnimation = CABasicAnimation(keyPath: "bounds")
         subAnimation.duration = 0.5
@@ -158,12 +159,13 @@ extension MSBBarChartView {
         subAnimation.isRemovedOnCompletion = false
         subAnimation.fillMode = CAMediaTimingFillMode(rawValue: "forwards")
         layer.add(subAnimation, forKey: "bounds")
-        layer.frame = subAnimation.toValue as! CGRect
+        layer.frame = subAnimation.toValue as? CGRect ?? CGRect()
     }
 
     private func drawGradientBar(xPos: CGFloat, yPos: CGFloat, colors: [UIColor]) {
         let barLayer = CAGradientLayer()
         barLayer.cornerRadius = 4.0
+        barLayer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         barLayer.frame = CGRect(x: xPos, y: self.mainLayer.frame.height - self.bottomSpace, width: self.barWidth, height: 0)
         barLayer.anchorPoint = CGPoint(x: 0.5, y: 1.0)
         let cgColors: [CGColor] = colors.map({ $0.cgColor })
@@ -180,6 +182,7 @@ extension MSBBarChartView {
             barLayerBase.colors = colors
             barLayerBase.anchorPoint = CGPoint(x: 0.5, y: 1.0)
             mainLayer.addSublayer(barLayerBase)
+                        
             let animation = CABasicAnimation(keyPath: "bounds")
             animation.duration = 0.5
             animation.fromValue = CGRect(x: xPos, y: self.mainLayer.frame.height - self.bottomSpace, width: self.barWidth, height: 0)
@@ -187,7 +190,7 @@ extension MSBBarChartView {
             animation.isRemovedOnCompletion = false
             animation.fillMode = CAMediaTimingFillMode(rawValue: "forwards")
             barLayerBase.add(animation, forKey: "bounds")
-            barLayerBase.frame = animation.toValue as! CGRect
+            barLayerBase.frame = animation.toValue as? CGRect ?? CGRect()
         }
         let subAnimation = CABasicAnimation(keyPath: "bounds")
         subAnimation.duration = 0.5
@@ -196,7 +199,7 @@ extension MSBBarChartView {
         subAnimation.isRemovedOnCompletion = false
         subAnimation.fillMode = CAMediaTimingFillMode(rawValue: "forwards")
         layer.add(subAnimation, forKey: "bounds")
-        layer.frame = subAnimation.toValue as! CGRect
+        layer.frame = subAnimation.toValue as? CGRect ?? CGRect()
     }
 
     private func drawHorizontalLines() {
@@ -259,10 +262,8 @@ extension MSBBarChartView {
 
     private func getMaxEntry() -> BarEntry? {
         guard let entries = self.dataEntries else { return nil }
-        for entry in entries {
-            if entry.isMax {
-                return entry
-            }
+        for entry in entries where entry.isMax {
+            return entry
         }
         return nil
     }
@@ -338,7 +339,7 @@ extension MSBBarChartView {
         return barColors!
     }
     
-    private func calcYaxisLabelMaxWidth(_ maxValue:Int) {
+    private func calcYaxisLabelMaxWidth(_ maxValue: Int) {
         let max = calcMax(maxValue)
         let maxStr = String(max)
         let size = maxStr.size(withAttributes: [.font: UIFont.systemFont(ofSize: yAxisLabelFontSize)])
@@ -347,7 +348,7 @@ extension MSBBarChartView {
         }
     }
     
-    private func calcMax(_ maxValue:Int) -> Int {
+    private func calcMax(_ maxValue: Int) -> Int {
         return ((maxValue / yAxisMaxInterval) + 1) * 10
     }
     
@@ -468,4 +469,3 @@ struct BarEntry {
         return height <= 0.0
     }
 }
-
