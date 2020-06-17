@@ -8,7 +8,7 @@
 <h3>MSBBarChart is an easy to use bar chart library for iOS.
 </h3>
 
-<img width=280 src="https://user-images.githubusercontent.com/509448/73722607-38024600-476a-11ea-8806-cc4a9245ffd8.gif">
+<img width=280 src="https://user-images.githubusercontent.com/509448/84864930-5f6f0500-b0b2-11ea-8350-d0aac3925ac5.gif">
 
 ## Usage
 
