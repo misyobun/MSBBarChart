@@ -74,6 +74,8 @@ open class MSBBarChartView: UIView {
     private var isHiddenExceptBars: Bool = false
 
     private var isGradientBar: Bool = false
+    
+    private var yAxisLabels:[String] = []
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -240,14 +242,17 @@ extension MSBBarChartView {
         labelLayer.backgroundColor = UIColor.clear.cgColor
         mainLayer.addSublayer(labelLayer)
     }
+    
+    private func setupYAxisLabels() {
+         guard let maxEntry = getMaxEntry() else { return }
+        self.yAxisLabels = createYAxisLabels(maxEntry: maxEntry)
+        deceideAxisLabelIfNeededWith(yAxisLabels)
+    }
 
     private func drawVericalAxisLabels() {
-        guard let maxEntry = getMaxEntry() else { return }
-        let yAxisLabels = createYAxisLabels(maxEntry: maxEntry)
-        deceideAxisLabelIfNeededWith(yAxisLabels)
         let translatedUnitHeight = CGFloat(1.0 / CGFloat(yAxisNumberOfInterval))
         drawVerticalAxisLabel("0", 0, mainLayer.frame.height - bottomSpace - 10)
-        for (i, label) in yAxisLabels.enumerated() {
+        for (i, label) in self.yAxisLabels.enumerated() {
             let labelYPosi = translateHeightValueToYPosition(value: translatedUnitHeight * CGFloat(i + 1))
             drawVerticalAxisLabel(label, 0, labelYPosi - 6)
         }
@@ -388,6 +393,7 @@ extension MSBBarChartView {
         mainLayer.sublayers?.forEach({ $0.removeFromSuperlayer() })
         
         prepareParameters()
+        setupYAxisLabels()
         
         barWidth = (scrollView.frame.width - (CGFloat(dataSource.count - 1) * space) - yAxisLabelWidth + startHorizontalLineMargin - bothSideMargin * 2) / CGFloat(dataSource.count)
         if barWidth < minimumBarWidth {
