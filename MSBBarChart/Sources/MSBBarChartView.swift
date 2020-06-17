@@ -246,7 +246,7 @@ extension MSBBarChartView {
     private func setupYAxisLabels() {
          guard let maxEntry = getMaxEntry() else { return }
         self.yAxisLabels = createYAxisLabels(maxEntry: maxEntry)
-        deceideAxisLabelIfNeededWith(yAxisLabels)
+        decideAxisLabelIfNeededWith(yAxisLabels)
     }
 
     private func drawVericalAxisLabels() {
@@ -259,7 +259,7 @@ extension MSBBarChartView {
         drawVerticalAxisLabel(yAxisTitle, 0, translateHeightValueToYPosition(value: translatedUnitHeight * CGFloat(self.yAxisLabels.count + 1)) - 6)
     }
     
-    private func deceideAxisLabelIfNeededWith(_ yAxisLabels:[String]) {
+    private func decideAxisLabelIfNeededWith(_ yAxisLabels:[String]) {
         yAxisLabels.forEach { yAxisLabel in
             calcYaxisLabelMaxWidthIfNeeded(yAxisLabel)
         }
