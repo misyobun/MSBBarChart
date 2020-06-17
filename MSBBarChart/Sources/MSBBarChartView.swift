@@ -105,9 +105,10 @@ extension MSBBarChartView {
     }
 
     private func showEntry(index: Int, entry: BarEntry, maxInterval: CGFloat) {
+        guard let maxBar = getMaxEntry(), let entryValue = Float(entry.textValue), let maxEntryValue = Float(maxBar.textValue) else { return }
         let barWidthSet = barWidth + space
         let xPos: CGFloat = yAxisLabelWidth + bothSideMargin + CGFloat(index) * barWidthSet
-        let yPos: CGFloat = translateHeightValueToYPosition(value: CGFloat(Int(entry.textValue)!) / CGFloat(maxYvalue))
+        let yPos: CGFloat = translateHeightValueToYPosition(value: CGFloat(entryValue / maxEntryValue))
         if !entry.isZeroBar() {
 
              if isGradientBar {
@@ -269,9 +270,9 @@ extension MSBBarChartView {
     }
 
     private func createYAxisLabels(maxEntry: BarEntry) -> [String] {
-        let max = maxYvalue
-        let intervalValue = Int(max) / Int(yAxisNumberOfInterval)
-        var insertValue: Int = 0
+        guard let max = Float(maxEntry.textValue) else { return []}
+        let intervalValue = max / Float(yAxisNumberOfInterval)
+        var insertValue: Float = 0
         var xAxisLabels: [String] = []
         while true {
             if insertValue >= max {
