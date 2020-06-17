@@ -256,7 +256,7 @@ extension MSBBarChartView {
             let labelYPosi = translateHeightValueToYPosition(value: translatedUnitHeight * CGFloat(i + 1))
             drawVerticalAxisLabel(label, 0, labelYPosi - 6)
         }
-        drawVerticalAxisLabel(yAxisTitle, 0, 20)
+        drawVerticalAxisLabel(yAxisTitle, 0, translateHeightValueToYPosition(value: translatedUnitHeight * CGFloat(self.yAxisLabels.count + 1)) - 6)
     }
     
     private func deceideAxisLabelIfNeededWith(_ yAxisLabels:[String]) {
