@@ -244,6 +244,7 @@ extension MSBBarChartView {
     private func drawVericalAxisLabels() {
         guard let maxEntry = getMaxEntry() else { return }
         let yAxisLabels = createYAxisLabels(maxEntry: maxEntry)
+        deceideAxisLabelIfNeededWith(yAxisLabels)
         let translatedUnitHeight = CGFloat(1.0 / CGFloat(yAxisNumberOfInterval))
         drawVerticalAxisLabel("0", 0, mainLayer.frame.height - bottomSpace - 10)
         for (i, label) in yAxisLabels.enumerated() {
@@ -251,6 +252,12 @@ extension MSBBarChartView {
             drawVerticalAxisLabel(label, 0, labelYPosi - 6)
         }
         drawVerticalAxisLabel(yAxisTitle, 0, 20)
+    }
+    
+    private func deceideAxisLabelIfNeededWith(_ yAxisLabels:[String]) {
+        yAxisLabels.forEach { yAxisLabel in
+            calcYaxisLabelMaxWidthIfNeeded(yAxisLabel)
+        }
     }
 
     private func getMaxEntry() -> BarEntry? {
@@ -265,13 +272,13 @@ extension MSBBarChartView {
         guard let max = Float(maxEntry.textValue) else { return []}
         let intervalValue = max / Float(yAxisNumberOfInterval)
         var insertValue: Float = 0
-        var xAxisLabels: [String] = []
+        var yAxisLabels: [String] = []
         while true {
             if insertValue >= max {
-                return xAxisLabels
+                return yAxisLabels
             }
             insertValue += intervalValue
-            xAxisLabels.append(String(insertValue))
+            yAxisLabels.append(String(format: "%.02f", Float(insertValue)))
         }
     }
 
@@ -332,17 +339,11 @@ extension MSBBarChartView {
         return barColors!
     }
     
-    private func calcYaxisLabelMaxWidth(_ maxValue: Float) {
-        let max = calcMax(maxValue)
-        let maxStr = String(max)
-        let size = maxStr.size(withAttributes: [.font: UIFont.systemFont(ofSize: yAxisLabelFontSize)])
+    private func calcYaxisLabelMaxWidthIfNeeded(_ label: String) {
+        let size = label.size(withAttributes: [.font: UIFont.systemFont(ofSize: yAxisLabelFontSize)])
         if self.yAxisLabelWidth < size.width {
-            self.yAxisLabelWidth = size.width
+           self.yAxisLabelWidth = size.width
         }
-    }
-    
-    private func calcMax(_ maxValue: Float) -> Float {
-        return Float(((maxValue / Float(yAxisMaxInterval)) + 1) * 10)
     }
     
     private func prepareParameters() {
@@ -369,8 +370,7 @@ extension MSBBarChartView {
                 yAxisNumberOfInterval = value
             case let .yAxisTitle(value):
                 yAxisTitle = value
-                let size = yAxisTitle.size(withAttributes: [.font: UIFont.systemFont(ofSize: yAxisLabelFontSize)])
-                self.yAxisLabelWidth = size.width
+                calcYaxisLabelMaxWidthIfNeeded(yAxisTitle)
             case let .xAxisUnitLabel(value):
                 xAxisUnitLabel = value
             case let .isHiddenLabelAboveBar(value):
@@ -431,7 +431,6 @@ extension MSBBarChartView {
             entries.append(BarEntry(color: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), height: CGFloat(height), title: "\(i + 1)\(xAxisUnitLabel)", textValue: "\(value)", isMax: isMax, textColor: xAxisLabelColor))
         }
         self.dataEntries = entries
-        self.calcYaxisLabelMaxWidth(Float(maxValue))
     }
 
     open func setXAxisUnitTitles(_ titles: [String]) {
