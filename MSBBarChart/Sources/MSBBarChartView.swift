@@ -106,11 +106,15 @@ extension MSBBarChartView {
 
     private func showEntry(index: Int, entry: BarEntry, maxInterval: CGFloat) {
         guard let maxBar = getMaxEntry(), let entryValue = Float(entry.textValue), let maxEntryValue = Float(maxBar.textValue) else { return }
+        
         let barWidthSet = barWidth + space
         let xPos: CGFloat = yAxisLabelWidth + bothSideMargin + CGFloat(index) * barWidthSet
-        let yPos: CGFloat = translateHeightValueToYPosition(value: CGFloat(entryValue / maxEntryValue))
+        var yPos: CGFloat = mainLayer.frame.height - bottomSpace
+        if (maxEntryValue > 0.0) {
+            yPos = translateHeightValueToYPosition(value: CGFloat(entryValue / maxEntryValue))
+        }
+        
         if !entry.isZeroBar() {
-
              if isGradientBar {
                 drawGradientBar(xPos: xPos, yPos: yPos, colors: getBarColors(entry))
             } else {
@@ -233,7 +237,6 @@ extension MSBBarChartView {
     private func drawVerticalAxisLabel(_ label: String, _ xPos: CGFloat, _ yPos: CGFloat) {
         let labelLayer = CATextLayer()
         labelLayer.frame = CGRect(x: xPos, y: yPos, width: yAxisLabelWidth, height: 16)
-        labelLayer.string = "0"
         labelLayer.alignmentMode = CATextLayerAlignmentMode(rawValue: "right")
         labelLayer.fontSize = yAxisLabelFontSize
         labelLayer.string = label
@@ -256,7 +259,13 @@ extension MSBBarChartView {
             let labelYPosi = translateHeightValueToYPosition(value: translatedUnitHeight * CGFloat(i + 1))
             drawVerticalAxisLabel(label, 0, labelYPosi - 6)
         }
-        drawVerticalAxisLabel(yAxisTitle, 0, translateHeightValueToYPosition(value: translatedUnitHeight * CGFloat(self.yAxisLabels.count + 1)) - 6)
+        
+        let labelsCount = self.yAxisLabels.count
+        var yAxisTitleHeight:CGFloat = translateHeightValueToYPosition(value: 1.0) - 20
+        if (labelsCount > 0) {
+            yAxisTitleHeight = translateHeightValueToYPosition(value: translatedUnitHeight * CGFloat(labelsCount + 1)) - 6
+        }
+        drawVerticalAxisLabel(yAxisTitle, 0, yAxisTitleHeight)
     }
     
     private func decideAxisLabelIfNeededWith(_ yAxisLabels:[String]) {
