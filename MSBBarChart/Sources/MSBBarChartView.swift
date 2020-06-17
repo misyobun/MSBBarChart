@@ -61,8 +61,6 @@ open class MSBBarChartView: UIView {
     
     private var startHorizontalLineMargin: CGFloat = 4.0
 
-    private var maxYvalue: Int = 0
-
     private var widthBetweenZeroAndFirst: CGFloat = 16.0
 
     private var barWidth: CGFloat = 12.0
@@ -254,12 +252,6 @@ extension MSBBarChartView {
         }
         drawVerticalAxisLabel(yAxisTitle, 0, 20)
     }
-    
-    private func calcMaxYvalue() {
-        guard let maxEntry = getMaxEntry(), let maxEntryValue = Int(maxEntry.textValue) else { return }
-        let max = calcMax(maxEntryValue)
-        maxYvalue = max
-    }
 
     private func getMaxEntry() -> BarEntry? {
         guard let entries = self.dataEntries else { return nil }
@@ -340,7 +332,7 @@ extension MSBBarChartView {
         return barColors!
     }
     
-    private func calcYaxisLabelMaxWidth(_ maxValue: Int) {
+    private func calcYaxisLabelMaxWidth(_ maxValue: Float) {
         let max = calcMax(maxValue)
         let maxStr = String(max)
         let size = maxStr.size(withAttributes: [.font: UIFont.systemFont(ofSize: yAxisLabelFontSize)])
@@ -349,8 +341,8 @@ extension MSBBarChartView {
         }
     }
     
-    private func calcMax(_ maxValue: Int) -> Int {
-        return ((maxValue / yAxisMaxInterval) + 1) * 10
+    private func calcMax(_ maxValue: Float) -> Float {
+        return Float(((maxValue / Float(yAxisMaxInterval)) + 1) * 10)
     }
     
     private func prepareParameters() {
@@ -405,9 +397,7 @@ extension MSBBarChartView {
         let contentWidth = yAxisLabelWidth - startHorizontalLineMargin  + bothSideMargin + (barWidth + space) * CGFloat(dataSource.count - 1) + barWidth  + bothSideMargin
         scrollView.contentSize = CGSize(width:contentWidth , height: self.frame.size.height)
         mainLayer.frame = CGRect(x: 0, y: 0, width: scrollView.contentSize.width, height: scrollView.contentSize.height)
-        
-        calcMaxYvalue()
-        
+                
         if (!isHiddenExceptBars) {
             drawVericalAxisLabels()
             drawHorizontalLines()
@@ -441,7 +431,7 @@ extension MSBBarChartView {
             entries.append(BarEntry(color: #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), height: CGFloat(height), title: "\(i + 1)\(xAxisUnitLabel)", textValue: "\(value)", isMax: isMax, textColor: xAxisLabelColor))
         }
         self.dataEntries = entries
-        self.calcYaxisLabelMaxWidth(maxValue)
+        self.calcYaxisLabelMaxWidth(Float(maxValue))
     }
 
     open func setXAxisUnitTitles(_ titles: [String]) {
