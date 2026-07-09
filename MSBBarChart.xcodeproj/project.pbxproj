@@ -9,13 +9,12 @@
 /* Begin PBXBuildFile section */
 		7470991623E830BB0003B660 /* MSBBarChart.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74F3A54323DEC3DD004A020D /* MSBBarChart.framework */; };
 		7470991A23E94CCC0003B660 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7470991923E94CCC0003B660 /* SceneDelegate.swift */; };
+		74E42F012E26E8D900000001 /* MSBBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E42F002E26E8D900000001 /* MSBBarChart.swift */; };
 		74F3A54823DEC3DD004A020D /* MSBBarChart.h in Headers */ = {isa = PBXBuildFile; fileRef = 74F3A54623DEC3DD004A020D /* MSBBarChart.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		74F3A54F23DEC427004A020D /* MSBBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F3A54E23DEC427004A020D /* MSBBarChartView.swift */; };
 		74F3A56F23DECE96004A020D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F3A56E23DECE96004A020D /* AppDelegate.swift */; };
 		74F3A57323DECE96004A020D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F3A57223DECE96004A020D /* ViewController.swift */; };
-		74F3A57623DECE96004A020D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74F3A57423DECE96004A020D /* Main.storyboard */; };
 		74F3A57823DECE97004A020D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74F3A57723DECE97004A020D /* Assets.xcassets */; };
-		74F3A57B23DECE97004A020D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74F3A57923DECE97004A020D /* LaunchScreen.storyboard */; };
 		74F3A58223DEDDCE004A020D /* MSBBarChart.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 74F3A54323DEC3DD004A020D /* MSBBarChart.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -48,13 +47,12 @@
 		74F3A54323DEC3DD004A020D /* MSBBarChart.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MSBBarChart.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74F3A54623DEC3DD004A020D /* MSBBarChart.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MSBBarChart.h; sourceTree = "<group>"; };
 		74F3A54723DEC3DD004A020D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		74E42F002E26E8D900000001 /* MSBBarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MSBBarChart.swift; path = Sources/MSBBarChart.swift; sourceTree = "<group>"; };
 		74F3A54E23DEC427004A020D /* MSBBarChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MSBBarChartView.swift; path = Sources/MSBBarChartView.swift; sourceTree = "<group>"; };
 		74F3A56C23DECE96004A020D /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74F3A56E23DECE96004A020D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		74F3A57223DECE96004A020D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		74F3A57523DECE96004A020D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		74F3A57723DECE97004A020D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		74F3A57A23DECE97004A020D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		74F3A57C23DECE97004A020D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,6 +99,7 @@
 			children = (
 				74F3A54623DEC3DD004A020D /* MSBBarChart.h */,
 				74F3A54723DEC3DD004A020D /* Info.plist */,
+				74E42F002E26E8D900000001 /* MSBBarChart.swift */,
 				74F3A54E23DEC427004A020D /* MSBBarChartView.swift */,
 			);
 			path = MSBBarChart;
@@ -112,9 +111,7 @@
 				74F3A56E23DECE96004A020D /* AppDelegate.swift */,
 				7470991923E94CCC0003B660 /* SceneDelegate.swift */,
 				74F3A57223DECE96004A020D /* ViewController.swift */,
-				74F3A57423DECE96004A020D /* Main.storyboard */,
 				74F3A57723DECE97004A020D /* Assets.xcassets */,
-				74F3A57923DECE97004A020D /* LaunchScreen.storyboard */,
 				74F3A57C23DECE97004A020D /* Info.plist */,
 			);
 			path = Sample;
@@ -228,9 +225,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74F3A57B23DECE97004A020D /* LaunchScreen.storyboard in Resources */,
 				74F3A57823DECE97004A020D /* Assets.xcassets in Resources */,
-				74F3A57623DECE96004A020D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +236,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74E42F012E26E8D900000001 /* MSBBarChart.swift in Sources */,
 				74F3A54F23DEC427004A020D /* MSBBarChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,25 +260,6 @@
 			targetProxy = 74F3A58323DEDDCE004A020D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		74F3A57423DECE96004A020D /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				74F3A57523DECE96004A020D /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		74F3A57923DECE97004A020D /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				74F3A57A23DECE97004A020D /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		74F3A54923DEC3DD004A020D /* Debug */ = {

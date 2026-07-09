@@ -12,7 +12,36 @@
 
 ## Usage
 
-![スクリーンショット 2020-02-04 16 38 16](https://user-images.githubusercontent.com/509448/73723618-caa3e480-476c-11ea-8eb2-4e0424d6820f.png)
+### SwiftUI
+
+```swift
+import SwiftUI
+import MSBBarChart
+
+struct ContentView: View {
+    var body: some View {
+        MSBBarChart(
+            values: [12, 24, 36, 48, 60, 72, 84, 96],
+            xAxisTitles: ["Textiles", "IT", "Steel", "Apparel", "Retail", "Real Estate", "Staffing", "Banking"]
+        )
+        .yAxisTitle("Growth")
+        .yAxisNumberOfInterval(10)
+        .frame(height: 220)
+    }
+}
+```
+
+```swift
+MSBBarChart(values: [16, 32, 64, 128, 256, 512, 1024, 2048])
+    .yAxisTitle("Sales")
+    .xAxisUnitLabel("M")
+    .gradientBar(true)
+    .frame(height: 220)
+```
+
+### UIKit
+
+![Screenshot 2020-02-04 16 38 16](https://user-images.githubusercontent.com/509448/73723618-caa3e480-476c-11ea-8eb2-4e0424d6820f.png)
 
 ### if you want to hide label above bar
 
