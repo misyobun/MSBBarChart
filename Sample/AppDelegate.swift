@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Sample
 //
-//  Created by 高橋直人 on 2020/01/27.
+//  Created by Naoto Takahashi on 2020/01/27.
 //  Copyright © 2020 msb. All rights reserved.
 //
 
@@ -33,4 +33,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-
